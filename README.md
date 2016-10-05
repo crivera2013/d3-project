@@ -12,3 +12,5 @@ The graph shows that Prosper Loans becomes far more exacting in their loan dispe
 
 Currently, the data does not fully refresh and scale whenever I press a button.  If i make it a single line graph, the data updates and the scales change just fine, but after adding multi-lines, only one line changes and the y-axis scale does not change.
 
+I am also trying to add a dynamically changing Y Axis label, a dynamically changing Title for each graph, and a Legend showing each line.
+
