@@ -66,6 +66,23 @@ var parseDate = d3.time.format("%d-%b-%y").parse;
 var x = d3.time.scale().range([0, width]);
 var y = d3.scale.linear().range([height, 0]);
 
+// Define the line
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.Moderate); });
+
+// defined 2nd line
+var valueline2 = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.Risky); });
+
+// defined 3rd line
+var valueline3 = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.Safe); });
+
+    
+
 // Define the axes
 var xAxis = d3.svg.axis().scale(x)
     .orient("bottom").ticks(10);
@@ -73,11 +90,7 @@ var xAxis = d3.svg.axis().scale(x)
 var yAxis = d3.svg.axis().scale(y)
     .orient("left").ticks(10);
 
-// Define the line
-var valueline = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
-    
+
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
@@ -91,17 +104,33 @@ var svg = d3.select("body")
 d3.csv("prosperLoanNumber.csv", function(error, data) {
     data.forEach(function(d) {
         d.date = parseDate(d.date);
-        d.close = +d.close;
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
     });
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.close; })]);
+    y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Add the valueline path.
     svg.append("path")
         .attr("class", "line")
         .attr("d", valueline(data));
+
+      // Add the valueline2 path.
+  svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .style("stroke", "red")
+      .attr("d", valueline2);
+
+      // Add the valueline3 path.
+    svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .style("stroke", "green")
+      .attr("d", valueline3);
 
     // Add the X Axis
     svg.append("g")
@@ -121,40 +150,43 @@ d3.csv("prosperLoanNumber.csv", function(error, data) {
 
 });
 
-// ** Update data section (Called from the onclick)
-function AverageLoan() {
+function MonthlyLoan() {
 
     // Get the data again
-    d3.csv("prosperLoanAverageLoanDispersed.csv", function(error, data) {
+    d3.csv("prosperLoanAML.csv", function(error, data) {
         data.forEach(function(d) {
-            d.date = parseDate(d.date);
-            d.close = +d.close;
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
         });
 
         // Scale the range of the data again 
         x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.close; })]);
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
 
-
-    ////////////////////////
-    //THIS PART IS THE PROBLEM WITH THE NOT UPDATING LINES!!!!!
-
-    //////// Make the changes
+    // Make the changes
         svg.select(".line")   // change the line
             .duration(750)
             .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
         svg.select(".x.axis") // change the x axis
             .duration(750)
             .call(xAxis);
         svg.select(".y.axis") // change the y axis
             .duration(750)
             .call(yAxis);
-
-
-    //////////////////////////////////////////////////////////
 
     });
 }
@@ -164,13 +196,15 @@ function NumLoan() {
     // Get the data again
     d3.csv("prosperLoanNumber.csv", function(error, data) {
         data.forEach(function(d) {
-            d.date = parseDate(d.date);
-            d.close = +d.close;
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
         });
 
         // Scale the range of the data again 
         x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.close; })]);
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
@@ -179,6 +213,15 @@ function NumLoan() {
         svg.select(".line")   // change the line
             .duration(750)
             .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
         svg.select(".x.axis") // change the x axis
             .duration(750)
             .call(xAxis);
@@ -189,18 +232,21 @@ function NumLoan() {
     });
 }
 
-function MonthlyLoan() {
+
+function AverageLoan() {
 
     // Get the data again
-    d3.csv("prosperLoanAML.csv", function(error, data) {
+    d3.csv("prosperLoanAverageLoanDispersed.csv", function(error, data) {
         data.forEach(function(d) {
-            d.date = parseDate(d.date);
-            d.close = +d.close;
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
         });
 
         // Scale the range of the data again 
         x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.close; })]);
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
@@ -209,6 +255,15 @@ function MonthlyLoan() {
         svg.select(".line")   // change the line
             .duration(750)
             .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
         svg.select(".x.axis") // change the x axis
             .duration(750)
             .call(xAxis);
@@ -224,13 +279,15 @@ function CreditScore() {
     // Get the data again
     d3.csv("prosperLoanAvgCreditScore.csv", function(error, data) {
         data.forEach(function(d) {
-            d.date = parseDate(d.date);
-            d.close = +d.close;
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
         });
 
         // Scale the range of the data again 
         x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return d.close; })]);
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
@@ -239,6 +296,15 @@ function CreditScore() {
         svg.select(".line")   // change the line
             .duration(750)
             .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
         svg.select(".x.axis") // change the x axis
             .duration(750)
             .call(xAxis);
@@ -248,6 +314,8 @@ function CreditScore() {
 
     });
 }
+
+
 
 
 </script>
