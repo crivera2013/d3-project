@@ -88,7 +88,7 @@ var svg = d3.select("body")
               "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-d3.csv("prosperLoanRisk.csv", function(error, data) {
+d3.csv("prosperLoanNumber.csv", function(error, data) {
     data.forEach(function(d) {
         d.date = parseDate(d.date);
         d.close = +d.close;
@@ -125,7 +125,7 @@ d3.csv("prosperLoanRisk.csv", function(error, data) {
 function AverageLoan() {
 
     // Get the data again
-    d3.csv("prosperLoanAverageLoan.csv", function(error, data) {
+    d3.csv("prosperLoanAverageLoanDispersed.csv", function(error, data) {
         data.forEach(function(d) {
             d.date = parseDate(d.date);
             d.close = +d.close;
@@ -162,7 +162,7 @@ function AverageLoan() {
 function NumLoan() {
 
     // Get the data again
-    d3.csv("prosperLoanRisk.csv", function(error, data) {
+    d3.csv("prosperLoanNumber.csv", function(error, data) {
         data.forEach(function(d) {
             d.date = parseDate(d.date);
             d.close = +d.close;
@@ -192,7 +192,7 @@ function NumLoan() {
 function MonthlyLoan() {
 
     // Get the data again
-    d3.csv("prosperLoanAverageMonthLoan.csv", function(error, data) {
+    d3.csv("prosperLoanAML.csv", function(error, data) {
         data.forEach(function(d) {
             d.date = parseDate(d.date);
             d.close = +d.close;
@@ -222,7 +222,7 @@ function MonthlyLoan() {
 function CreditScore() {
 
     // Get the data again
-    d3.csv("prosperLoanCreditScore.csv", function(error, data) {
+    d3.csv("prosperLoanAvgCreditScore.csv", function(error, data) {
         data.forEach(function(d) {
             d.date = parseDate(d.date);
             d.close = +d.close;
