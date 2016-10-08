@@ -26,7 +26,7 @@ Due, to the size limits of the graph on the webpage, it couldn't properly scale 
 Peer Design Critique #2:
 "Am I supposed to know what a "risky" loan is compared with everything else?" - Valerie Piro (friend)
 
-While, I thoguht my legend was descriptive enough with the larger bold print "Risky Loans", this critique showed that it was not the case.  As such I added smaller text in the legend to better describe the definition of "Risky Loans" and the other two by what their credit ratings are.
+While, I thought my legend was descriptive enough with the larger bold print "Risky Loans", this critique showed that it was not the case.  As such I added smaller text in the legend to better describe the definition of "Risky Loans" and the other two by what their credit ratings are.
 
 Peer Design Critique #3:
 "The buttons aren't aethetically pleasing, you should use a drop down menu" - Ashutosh Singh (Udacity 1-1 tutor)
