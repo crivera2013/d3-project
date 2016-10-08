@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 4;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+</style>
+<body>
+
+<div id="option">
+    <input name="updateButton" 
+           type="button" 
+           value="Average Loan Issued Per Quarter" 
+           onclick="AverageLoan()" />
+</div>
+
+<div id="option">
+    <input name="updateButton" 
+           type="button" 
+           value="Number of Loans Issued Per Quarter" 
+           onclick="NumLoan()" />
+</div>
+
+<div id="option">
+    <input name="updateButton" 
+           type="button" 
+           value="Average Monthly Loan Payment Per Quarter" 
+           onclick="MonthlyLoan()" />
+</div>
+
+<div id="option">
+    <input name="updateButton" 
+           type="button" 
+           value="Average Credit Score for Loan Recipient per Quarter" 
+           onclick="CreditScore()" />
+</div>
+
+<!-- load the d3.js library -->    
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+// Set the dimensions of the canvas / graph
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
+    width = 800 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// Parse the date / time
+var parseDate = d3.time.format("%d-%b-%y").parse;
+
+// Set the ranges
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+
+// Define the line
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.Moderate); });
+
+// defined 2nd line
+var valueline2 = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.Risky); });
+
+// defined 3rd line
+var valueline3 = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.Safe); });
+
+    
+
+// Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(10);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(10);
+
+
+// Adds the svg canvas
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+
+// Get the data
+d3.csv("prosperLoanNumber.csv", function(error, data) {
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
+    });
+
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+
+    // Add the valueline path.
+    svg.append("path")
+        .attr("class", "line")
+        .attr("d", valueline(data));
+
+      // Add the valueline2 path.
+  svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .style("stroke", "red")
+      .attr("d", valueline2);
+
+      // Add the valueline3 path.
+    svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .style("stroke", "green")
+      .attr("d", valueline3);
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+    svg.append("text")
+            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+            .attr("transform", "translate("+ (width/2) +","+(height-(padding/3))+")")  // centre below axis
+            .text("Date by Quarter");
+
+});
+
+function MonthlyLoan() {
+
+    // Get the data again
+    d3.csv("prosperLoanAML.csv", function(error, data) {
+        data.forEach(function(d) {
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
+        });
+
+        // Scale the range of the data again 
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+
+    // Select the section we want to apply our changes to
+    var svg = d3.select("body").transition();
+
+    // Make the changes
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(yAxis);
+
+    });
+}
+
+function NumLoan() {
+
+    // Get the data again
+    d3.csv("prosperLoanNumber.csv", function(error, data) {
+        data.forEach(function(d) {
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
+        });
+
+        // Scale the range of the data again 
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+
+    // Select the section we want to apply our changes to
+    var svg = d3.select("body").transition();
+
+    // Make the changes
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(yAxis);
+
+    });
+}
+
+
+function AverageLoan() {
+
+    // Get the data again
+    d3.csv("prosperLoanAverageLoanDispersed.csv", function(error, data) {
+        data.forEach(function(d) {
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
+        });
+
+        // Scale the range of the data again 
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+
+    // Select the section we want to apply our changes to
+    var svg = d3.select("body").transition();
+
+    // Make the changes
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(yAxis);
+
+    });
+}
+
+function CreditScore() {
+
+    // Get the data again
+    d3.csv("prosperLoanAvgCreditScore.csv", function(error, data) {
+        data.forEach(function(d) {
+             d.date = parseDate(d.date);
+        d.Moderate = +d.Moderate;
+        d.Risky = +d.Risky;
+        d.Safe = +d.Safe;
+        });
+
+        // Scale the range of the data again 
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+
+    // Select the section we want to apply our changes to
+    var svg = d3.select("body").transition();
+
+    // Make the changes
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline(data));
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline2);
+
+        svg.select(".line")   // change the line
+            .duration(750)
+            .attr("d", valueline3);
+
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(yAxis);
+
+    });
+}
+
+
+
+
+</script>
+</body>
