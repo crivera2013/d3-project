@@ -1,5 +1,6 @@
 # d3-project
 project d3 for udacity
+Visualization can be found on bl.orgs.org found here: https://bl.ocks.org/crivera2013/raw/62335a5035a731b9cadff8a067447112/
 
 #Summary:
 I created a collection of multi-line line graphs showing loan disperment data from Prosper during, and after the 2009 financial crash.  Each line represents a different collection of loans from Prosper Loans (Safe, Moderate, Risky) and showing how each group was effected over each quarter.  The table is be dynamic and can switch between 4 time-series graphs:
