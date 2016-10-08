@@ -24,13 +24,70 @@ path {
     text-anchor: middle;
 }
 
+/* Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
 
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: fixed;
+    bottom: 20;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
 </style>
+<head>
+<div class="dropdown">
+  <button class="dropbtn">Loan Metrics Dropdown</button>
+  <div class="dropdown-content">
+    <a href="#drop1" onclick="AverageLoan()">Average Loan Amount Issued</a>
+    <a href="#drop2" onclick="NumLoan()">Number of Loans Issued</a>
+    <a href="#drop3" onclick="MonthlyLoan()">Average Monthly Loan Payment</a>
+    <a href="#drop4" onclick="CreditScore()">Average Credit Score for Loan Recipient</a>
+  </div>
+</div>
+</head>
 <body>
 
 
+
 <!-- load the d3.js library -->    
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 
 <script>
 
@@ -388,35 +445,11 @@ function CreditScore() {
 
 
 </script>
-<font size="4" style="position: absolute; top:200px; left:850px; width:200px; height:25px" color="red">Risky Loans</font>
-<font size="4" style="position: absolute; top:250px; left:850px; width:200px; height:25px" color="green">Moderate Loans</font>
-<font size="4"  style="position: absolute; top:300px; left:850px; width:200px; height:25px" color="blue">Safe Loans</font>
+<font size="4" style="position: absolute; top:180px; left:850px; width:200px; height:25px" color="red">Risky Loans</font>
+<font size="2" style="position: absolute; top:200px; left:850px; width:200px; height:25px" color="red">Loans with Credit Ratings: D,E,HR </font>
+<font size="4" style="position: absolute; top:260px; left:850px; width:200px; height:25px" color="green">Moderate Loans</font>
+<font size="2" style="position: absolute; top:280px; left:850px; width:200px; height:25px" color="green">Loans with Credit Ratings: B, C</font>
+<font size="4"  style="position: absolute; top:340px; left:850px; width:200px; height:25px" color="blue">Safe Loans</font>
+<font size="2" style="position: absolute; top:360px; left:850px; width:200px; height:25px" color="blue">Loans with Credit Ratings: AA, A</font>
 
-<div id="option">
-    <input name="updateButton" 
-           type="button" 
-           value="Average Loan Issued Per Quarter" 
-           onclick="AverageLoan()" />
-</div>
-
-<div id="option">
-    <input name="updateButton" 
-           type="button" 
-           value="Number of Loans Issued Per Quarter" 
-           onclick="NumLoan()" />
-</div>
-
-<div id="option">
-    <input name="updateButton" 
-           type="button" 
-           value="Average Monthly Loan Payment Per Quarter" 
-           onclick="MonthlyLoan()" />
-</div>
-
-<div id="option">
-    <input name="updateButton" 
-           type="button" 
-           value="Average Credit Score for Loan Recipient per Quarter" 
-           onclick="CreditScore()" />
-</div>
 </body>
