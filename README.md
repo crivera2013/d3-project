@@ -1,5 +1,6 @@
 # d3-project
-project d3 for udacity
+project d3 for udacity.
+
 Visualization can be found on bl.orgs.org found here: https://bl.ocks.org/crivera2013/raw/62335a5035a731b9cadff8a067447112/
 
 #Summary:
@@ -32,5 +33,7 @@ Originally, I had 4 buttons stacked vertically below my graph which were used to
 
 #Sources:
 http://www.w3schools.com/howto/howto_css_dropdown.asp  for dropdown menu
+
 https://bl.ocks.org/mbostock/3884955  for multiple line graphs
+
 https://bl.ocks.org/d3noob/7030f35b72de721622b8  for update buttons
