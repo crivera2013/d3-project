@@ -11,7 +11,7 @@ I created a collection of multi-line line graphs showing loan disperment data fr
 3. The average amount of loan dispersed to each risk group.
 4. The average credit score for each risk group.
 
-The graph shows that Prosper Loans becomes far more exacting in their loan dispersment process by increasing the number of safe and moderate loans as well as increasing the requirements for loans in every risk level after the crash.
+The graph shows the general trend of what occured after the recession ended by showing an increased amount of credit (number of loans) being dispersed.  At the same time, it appears that Prosper becaume more exacting in its requirements for a loan as well as made efforts to make the loans safer.  For example, before the end of the recession, Prosper, was issuing loans to borrowers with credit scores in the mid 500s. After the end of the recession, it appears that Prosper has a baseline credit score requirement of 700 for all loans including those it considered risky.  Also, the average monthly loan payments for the Prosper loans post-recession are much higher for all 3 groups of loans By requiring higher monthly loans, Prosper is limiting the risk of each loan by forcing the loan to be paid off faster suggesting that Prosper did not want to repeat the mistakes of the financial recession when too many loans defaulted.
 
 
 #Design
