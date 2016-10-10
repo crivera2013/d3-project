@@ -34,6 +34,11 @@ Peer Design Critique #3:
 
 Originally, I had 4 buttons stacked vertically below my graph which were used to toggles to update the graph with different data.  However, it was neither aethetically pleasing, and apparently confusing to someone just looking at the graph, so I changed the buttons into a drop down menu.
 
+Peer Design Critique #4 (after first submission):
+"Move the dropdown menu to the bottom of the graph"  (Ashutosh Singh (Udacity 1-1 tutor)
+
+While working on a windows machine, I thought there was enough space between the drop down menu and the title.  When I switched to a mac, there was no space and they were crunched together.  As such, I moved the dropdown menu to the bottom of the graph and had the drop menu go up instead of down.
+
 #Sources:
 http://www.w3schools.com/howto/howto_css_dropdown.asp  for dropdown menu
 
