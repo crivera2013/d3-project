@@ -2,94 +2,125 @@
 <meta charset="utf-8">
 <style> /* set the CSS */
 
-body { font: 12px Arial;}
+    body { font: 12px Arial;}
 
-path { 
-    stroke: steelblue;
-    stroke-width: 4;
-    fill: none;
-}
+    /* set the intial line width and initial color*/
+    path { 
+        stroke: steelblue;
+        stroke-width: 4;
+        fill: none;
+    }
 
-.axis path,
-.axis line {
-    fill: none;
-    stroke: grey;
-    stroke-width: 1;
-    shape-rendering: crispEdges;
-}
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: grey;
+        stroke-width: 1;
+        shape-rendering: crispEdges;
+    }
 
-.legend {
-    font-size: 16px;
-    font-weight: bold;
-    text-anchor: middle;
-}
 
-/* Dropdown Button */
-.dropbtn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
+
+    /* Dropdown Button */
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
 
 /* The container <div> - needed to position the dropdown content */
-.dropdown {
-    position: fixed;
-    bottom: 20;
-    display: inline-block;
-}
+    .dropdown {
+        position: absolute;
+        margin-top:500px;
+        bottom: 20;
+        display: inline-block;
+    }
 
 /* Dropdown Content (Hidden by Default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+
 
 /* Links inside the dropdown */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+    .dropdown-content a:hover {background-color: #f1f1f1}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+    .dropdown:hover .dropdown-content {
+        display: block;
+        bottom: 100%;
+    }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-}
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
 </style>
-<head>
-<div class="dropdown">
-  <button class="dropbtn">Loan Metrics Dropdown</button>
-  <div class="dropdown-content">
-    <a href="#drop1" onclick="AverageLoan()">Average Loan Amount Issued</a>
-    <a href="#drop2" onclick="NumLoan()">Number of Loans Issued</a>
-    <a href="#drop3" onclick="MonthlyLoan()">Average Monthly Loan Payment</a>
-    <a href="#drop4" onclick="CreditScore()">Average Credit Score for Loan Recipient</a>
-  </div>
-</div>
-</head>
+
+<!-- Create the Dropdown Menu for updating the graph -->
+    <div class="dropdown">
+        <button class="dropbtn">Choose a metric</button>
+        <div class="dropdown-content">
+            <a href="#drop1" onclick="AverageLoan()">Average Loan Amount Issued</a>
+            <a href="#drop2" onclick="NumLoan()">Number of Loans Issued</a>
+            <a href="#drop3" onclick="MonthlyLoan()">Average Monthly Loan Payment</a>
+            <a href="#drop4" onclick="CreditScore()">Average Credit Score for Loan Recipient</a>
+        </div>
+    </div>
+
+
 <body>
 
+<!-- Input Legend text -->
+<!-- Risky Loan Legend -->
+    <font size="4" style="position: absolute; top:180px; left:850px; width:200px; height:25px" 
+        color="red">Risky Loans</font>
+
+    <font size="2" style="position: absolute; top:200px; left:850px; width:200px; height:25px" 
+        color="red">Loans with Credit Ratings: D,E,HR </font>
 
 
+<!-- Moderate Loan Legend -->
+    <font size="4" style="position: absolute; top:260px; left:850px; width:200px; height:25px"
+        color="green">Moderate Loans</font>
+
+    <font size="2" style="position: absolute; top:280px; left:850px; width:200px; height:25px"
+        color="green">Loans with Credit Ratings: B, C</font>
+
+
+<!-- Safe Loan Legend -->
+    <font size="4"  style="position: absolute; top:340px; left:850px; width:200px; height:25px" 
+        color="blue">Safe Loans</font>
+
+    <font size="2" style="position: absolute; top:360px; left:850px; width:200px; height:25px"
+        color="blue">Loans with Credit Ratings: AA, A</font>
+
+<!-- Graph description -->
+    <font size="2"  style="position: absolute; top:525px; left:210px; width:700px; height:25px
+        ">The 2007-2009 Financial Recession, in short, occured because too many risky loans defaulted simultaneously leaving banks unable to pay their own bills much less issue any new loans or other credit.  The end of the  Financial Recession ended as once again, banks and other lenders started issuing more loans at levels strong enough to support healthy economic growth.  At the same time, to not repeat the previous mistakes, these lenders started issuing less risky loans including demanding higher monthly payments and raising the lending requirements, like higher credit scores, for prospective borrowers.  This can be seen by observing loan data from the lender, Prosper, as shown in the graph above. </font>
+
+
+<!-- THE JAVASCRIPT PORTION STARTS HERE -->
 <!-- load the d3.js library -->    
-<script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
 
-<script>
+    <script>
 
 // Set the dimensions of the canvas / graph
 var margin = {top: 100, right: 20, bottom: 30, left: 80},
@@ -133,11 +164,10 @@ var yAxis = d3.svg.axis().scale(y)
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
     .append("g")
-        .attr("transform", 
-              "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform","translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
 d3.csv("prosperLoanNumber.csv", function(error, data) {
@@ -147,9 +177,6 @@ d3.csv("prosperLoanNumber.csv", function(error, data) {
         d.Risky = +d.Risky;
         d.Safe = +d.Safe;
     });
-
-
-  
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -162,20 +189,20 @@ d3.csv("prosperLoanNumber.csv", function(error, data) {
         .attr("d", valueline(data));
 
       // Add the valueline2 path.
-  svg.append("path")
-      .data([data])
-      .attr("class", "line")
-      .attr("id","line2")
-      .style("stroke", "red")
-      .attr("d", valueline2(data));
+    svg.append("path")
+        .data([data])
+        .attr("class", "line")
+        .attr("id","line2")
+        .style("stroke", "red")
+        .attr("d", valueline2(data));
 
       // Add the valueline3 path.
     svg.append("path")
-      .data([data])
-      .attr("class", "line")
-      .attr("id","line3")
-      .style("stroke", "green")
-      .attr("d", valueline3(data));
+        .data([data])
+        .attr("class", "line")
+        .attr("id","line3")
+        .style("stroke", "green")
+        .attr("d", valueline3(data));
 
     // Add the X Axis
     svg.append("g")
@@ -190,9 +217,9 @@ d3.csv("prosperLoanNumber.csv", function(error, data) {
 
 // add x axis title
     svg.append("text")
-            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-            .attr("transform", "translate("+ (width/2) +","+(height-(padding/3))+")")  // centre below axis
-            .text("Date by Quarter");
+        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+        .attr("transform", "translate("+ (width/2) +","+(height-(padding/3))+")")  // centre below axis
+        .text("Date by Quarter");
 
 //add y axis title
     svg.append("text")
@@ -206,7 +233,7 @@ d3.csv("prosperLoanNumber.csv", function(error, data) {
 
 
 //add graph title
-svg.append("text")
+    svg.append("text")
         .attr("x", (width / 2))             
         .attr("y", 0 - (margin.top /1.5))
         .attr("text-anchor", "middle")  
@@ -215,7 +242,7 @@ svg.append("text")
         .text("Prosper Loans Company Throughout the Financial Recession");
 
 
-svg.append("text")
+    svg.append("text")
         .attr("x", (width / 2))             
         .attr("y", 0 - (margin.top /2.5))
         .attr("text-anchor", "middle")  
@@ -223,76 +250,81 @@ svg.append("text")
         .attr("id","title1")         
         .text("Number of Loans Dispersed per Quarter");
 
-svg.append("line")
-    .attr("y1",y(0))
-    .attr("y2",y(4000))
-    .attr("x1",290)
-    .attr("x2",290)
-    .attr("stroke","grey")
-    .attr("stroke-width","2")
-    .style("stroke-dasharray",("2, 2"))
+    svg.append("line")
+        .attr("y1",y(0))
+        .attr("y2",y(4000))
+        .attr("x1",290)
+        .attr("x2",290)
+        .attr("stroke","grey")
+        .attr("stroke-width","2")
+        .style("stroke-dasharray",("2, 2"))
 
-svg.append("text")
+    svg.append("text")
         .attr("x", 340)             
         .attr("y", y(3500))
         .attr("text-anchor", "middle")  
         .style("font-size", "12px")       
         .text("-- End of Recession");
 
-
-
 });
 
+///////////////////////////////////////
+// UPDATE DATA FUNCTIONS START HERE ///
+
+
+//// AVERAGE MONTHLY LOAN PAYMENT UPDATE ////
 function MonthlyLoan() {
 
     // Get the data again
     d3.csv("prosperLoanAML.csv", function(error, data) {
         data.forEach(function(d) {
-             d.date = parseDate(d.date);
+        d.date = parseDate(d.date);
         d.Moderate = +d.Moderate;
         d.Risky = +d.Risky;
         d.Safe = +d.Safe;
         });
 
         // Scale the range of the data again 
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
 
     // Make the changes
-        svg.select("#line1")   // change the line
-            .duration(750)
-            .attr("d", valueline(data));
+    svg.select("#line1")   // change the line
+        .duration(750)
+        .attr("d", valueline(data));
 
-        svg.select("#line2")   // change the line
-            .duration(750)
-            .attr("d", valueline2(data));
+    svg.select("#line2")   // change the line
+        .duration(750)
+        .attr("d", valueline2(data));
 
-        svg.select("#line3")   // change the line
-            .duration(750)
-            .attr("d", valueline3(data));
+    svg.select("#line3")   // change the line
+        .duration(750)
+        .attr("d", valueline3(data));
 
-        svg.select("#ySide")
-            .duration(750)
-            .text("Average Monthly Cost ($)");
+    svg.select("#ySide")
+        .duration(750)
+        .text("Average Monthly Cost ($)");
 
-        svg.select("#title1")
-            .duration(2000)
-            .text("Average Monthly Loan Payment of Dispersed Loans");
+    svg.select("#title1")
+        .duration(2000)
+        .text("Average Monthly Loan Payment of Dispersed Loans");
 
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
+    svg.select(".x.axis") // change the x axis
+        .duration(750)
+        .call(xAxis);
+        
+    svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
 
 
     });
 }
 
+////NUMBER OF LOANS UPDATE FUNCTION ///////
 function NumLoan() {
 
     // Get the data again
@@ -305,99 +337,105 @@ function NumLoan() {
         });
 
         // Scale the range of the data again 
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
 
     // Make the changes
-        svg.select("#line1")   // change the line
-            .duration(750)
-            .attr("d", valueline(data));
+    svg.select("#line1")   // change the line
+        .duration(750)
+        .attr("d", valueline(data));
 
-        svg.select("#line2")   // change the line
-            .duration(750)
-            .attr("d", valueline2(data));
+    svg.select("#line2")   // change the line
+        .duration(750)
+        .attr("d", valueline2(data));
 
-        svg.select("#line3")   // change the line
-            .duration(750)
-            .attr("d", valueline3(data));
+    svg.select("#line3")   // change the line
+        .duration(750)
+        .attr("d", valueline3(data));
 
-        svg.select("#ySide")
-            .duration(750)
-            .text("Number of Loans");
+    svg.select("#ySide")
+        .duration(750)
+        .text("Number of Loans");
 
-        svg.select("#title1")
-            .duration(2000)
-            .text("Number of Loans Dispersed per Quarter");
+    svg.select("#title1")
+        .duration(2000)
+        .text("Number of Loans Dispersed per Quarter");
 
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
+    svg.select(".x.axis") // change the x axis
+        .duration(750)
+        .call(xAxis);
+
+    svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
 
     });
 }
 
+//// AVERAGE LOAN AMOUNT DISPERSED ////
 
 function AverageLoan() {
 
     // Get the data again
     d3.csv("prosperLoanAverageLoanDispersed.csv", function(error, data) {
         data.forEach(function(d) {
-             d.date = parseDate(d.date);
+        d.date = parseDate(d.date);
         d.Moderate = +d.Moderate;
         d.Risky = +d.Risky;
         d.Safe = +d.Safe;
         });
 
         // Scale the range of the data again 
-        x.domain(d3.extent(data, function(d) { return d.date; }));
-        y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return (d.Moderate, d.Risky, d.Safe); })]);
 
     // Select the section we want to apply our changes to
     var svg = d3.select("body").transition();
 
     // Make the changes
-        svg.select("#line1")   // change the line
-            .duration(750)
-            .attr("d", valueline(data));
+    svg.select("#line1")   // change the line
+        .duration(750)
+        .attr("d", valueline(data));
 
-        svg.select("#line2")   // change the line
-            .duration(750)
-            .attr("d", valueline2(data));
+    svg.select("#line2")   // change the line
+        .duration(750)
+        .attr("d", valueline2(data));
 
-        svg.select("#line3")   // change the line
-            .duration(750)
-            .attr("d", valueline3(data));
+    svg.select("#line3")   // change the line
+        .duration(750)
+        .attr("d", valueline3(data));
 
-        svg.select("#ySide")
-            .duration(750)
-            .text("Loan Amount ($)")
+    svg.select("#ySide")
+        .duration(750)
+        .text("Loan Amount ($)")
 
-        svg.select("#title1")
-            .duration(2000)
-            .text("Average Value of Dispersed Loan");
+    svg.select("#title1")
+        .duration(2000)
+        .text("Average Value of Dispersed Loan");
 
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
+    svg.select(".x.axis") // change the x axis
+        .duration(750)
+        .call(xAxis);
+
+    svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
 
     });
 }
+
+
+/// AVERAGE CREDIT SCORE UPDATE FUNCTION ////
 
 function CreditScore() {
 
     // Get the data again
     d3.csv("prosperLoanAvgCreditScore.csv", function(error, data) {
         data.forEach(function(d) {
-             d.date = parseDate(d.date);
+        d.date = parseDate(d.date);
         d.Moderate = +d.Moderate;
         d.Risky = +d.Risky;
         d.Safe = +d.Safe;
@@ -411,45 +449,36 @@ function CreditScore() {
     var svg = d3.select("body").transition();
 
     // Make the changes
-        svg.select("#line1")   // change the line
-            .duration(750)
-            .attr("d", valueline(data));
+    svg.select("#line1")   // change the line
+        .duration(750)
+        .attr("d", valueline(data));
 
-        svg.select("#line2")   // change the line
-            .duration(750)
-            .attr("d", valueline2(data));
+    svg.select("#line2")   // change the line
+        .duration(750)
+        .attr("d", valueline2(data));
 
-        svg.select("#line3")   // change the line
-            .duration(750)
-            .attr("d", valueline3(data));
+    svg.select("#line3")   // change the line
+        .duration(750)
+        .attr("d", valueline3(data));
 
-        svg.select("#ySide")
-            .duration(750)
-            .text("Credit Score")
+    svg.select("#ySide")
+        .duration(750)
+        .text("Credit Score")
 
-        svg.select("#title1")
-            .duration(2000)
-            .text("Average Credit Score ");
+    svg.select("#title1")
+        .duration(2000)
+        .text("Average Credit Score ");
 
-        svg.select(".x.axis") // change the x axis
-            .duration(750)
-            .call(xAxis);
-        svg.select(".y.axis") // change the y axis
-            .duration(750)
-            .call(yAxis);
+    svg.select(".x.axis") // change the x axis
+        .duration(750)
+        .call(xAxis);
+
+    svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
 
     });
 }
-
-
-
-
-</script>
-<font size="4" style="position: absolute; top:180px; left:850px; width:200px; height:25px" color="red">Risky Loans</font>
-<font size="2" style="position: absolute; top:200px; left:850px; width:200px; height:25px" color="red">Loans with Credit Ratings: D,E,HR </font>
-<font size="4" style="position: absolute; top:260px; left:850px; width:200px; height:25px" color="green">Moderate Loans</font>
-<font size="2" style="position: absolute; top:280px; left:850px; width:200px; height:25px" color="green">Loans with Credit Ratings: B, C</font>
-<font size="4"  style="position: absolute; top:340px; left:850px; width:200px; height:25px" color="blue">Safe Loans</font>
-<font size="2" style="position: absolute; top:360px; left:850px; width:200px; height:25px" color="blue">Loans with Credit Ratings: AA, A</font>
+    </script>
 
 </body>
