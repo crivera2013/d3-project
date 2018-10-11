@@ -1,6 +1,4 @@
 # d3-project
-project d3 for udacity.
-
 Visualization can be found on bl.orgs.org found here: https://bl.ocks.org/crivera2013/raw/62335a5035a731b9cadff8a067447112/
 
 #Summary:
